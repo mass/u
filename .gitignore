@@ -1,3 +1,4 @@
 *.o
 
+test/log
 test/stream_buf

@@ -1,6 +1,6 @@
 CXX       := g++
 CXXFLAGS  := -std=c++17 -g -ggdb -Wall -Werror -Wextra -Wconversion -Wpedantic -pedantic-errors -O2
-BINS      := stream_buf
+BINS      := stream_buf log
 INCLUDE   := -I../include
 
 #TODO: Add header deps
