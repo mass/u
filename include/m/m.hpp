@@ -15,9 +15,25 @@
 
 namespace m {
 
-  // Helpers for unsigned char (byte) values
+  // Convienence definitions for unsigned char (byte) values
   using byte_view  = std::basic_string_view<uint8_t>;
   using byte_vec   = std::vector<uint8_t>;
-  inline byte_view byte_vec_to_view(const byte_vec& vec) { return byte_view(vec.data(), vec.size()); }
 
+  // Create views from containers of other types
+  template<typename T, typename F>
+  inline std::basic_string_view<T> view(std::basic_string_view<F> v) {
+    return std::basic_string_view<T>((const T*) v.data(), v.size());
+  }
+  template<typename T, typename F>
+  inline std::basic_string_view<T> view(const std::basic_string<F>& v) {
+    return std::basic_string_view<T>((const T*) v.data(), v.size());
+  }
+  template<typename T, typename F>
+  inline std::basic_string_view<T> view(const std::vector<F>& v) {
+    static_assert(sizeof(F) == 1);
+    return std::basic_string_view<T>((const T*) v.data(), v.size());
+  }
 };
+
+// String literal for byte_view
+m::byte_view operator"" _bv(const char* d, size_t l) { return m::byte_view((const uint8_t*) d, l); }

@@ -8,14 +8,17 @@ int main(int argc, char** argv)
   UNUSED(argc);
   UNUSED(argv);
 
-  m::stream_buf buf;
-  buf.write("Hello, world");
+  m::stream_buf<char> buf;
 
+  buf.write("Hello, world");
   if (buf.get_read_left() != 12)
     return EXIT_FAILURE;
 
-  buf.advance_read(12);
+  buf.erase_read(buf.get_read() + 2, 3);
+  if (buf.get_read_view() != "He, world")
+    return EXIT_FAILURE;
 
+  buf.advance_read(9);
   if (buf.get_read_left() != 0)
     return EXIT_FAILURE;
 
