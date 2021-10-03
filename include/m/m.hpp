@@ -34,6 +34,11 @@ namespace m {
     static_assert(sizeof(F) == 1);
     return std::basic_string_view<T>((const T*) v.data(), v.size());
   }
+  template<typename T>
+  inline std::basic_string_view<T> view(const std::vector<T>& v) {
+    static_assert(sizeof(T) == 1);
+    return std::basic_string_view<T>((const T*) v.data(), v.size());
+  }
 
   // Return the current time in nanoseconds since the Epoch
   inline int64_t now()
