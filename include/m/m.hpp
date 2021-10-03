@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <string_view>
+#include <time.h>
 #include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +34,16 @@ namespace m {
     static_assert(sizeof(F) == 1);
     return std::basic_string_view<T>((const T*) v.data(), v.size());
   }
+
+  // Return the current time in nanoseconds since the Epoch
+  inline int64_t now()
+  {
+    struct timespec tv;
+    if (UNLIKELY(::clock_gettime(CLOCK_REALTIME, &tv) != 0))
+      return -1L;
+    return (tv.tv_sec * 1000000000L) + tv.tv_nsec;
+  }
 };
 
 // String literal for byte_view
-m::byte_view operator"" _bv(const char* d, size_t l) { return m::byte_view((const uint8_t*) d, l); }
+inline m::byte_view operator"" _bv(const char* d, size_t l) { return m::byte_view((const uint8_t*) d, l); }
