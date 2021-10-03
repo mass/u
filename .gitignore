@@ -1,4 +1,5 @@
 *.o
+*.d
 
 test/m
 test/log
