@@ -48,6 +48,17 @@ namespace m {
       return -1L;
     return (tv.tv_sec * 1000000000L) + tv.tv_nsec;
   }
+
+  // Set variable and return whether it changed
+  template<typename T>
+  inline constexpr bool chset(T& p, T&& n) noexcept
+  {
+    if (p == n)
+      return false;
+    p = std::forward<T>(n);
+    return true;
+  }
+
 };
 
 // String literal for byte_view
