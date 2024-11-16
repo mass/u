@@ -2,7 +2,7 @@ CXX       := g++
 CXXFLAGS  := -std=c++17 -g -ggdb -Wall -Werror -Wextra -Wconversion -Wpedantic -pedantic-errors -O2
 DEPFLAGS   = -MT $@ -MMD -MP -MF $*.d
 INCLUDE   := -I../include
-BINS      := m stream_buf log
+BINS      := u stream_buf log
 DEPFILES  := $(BINS:%=%.d)
 
 .PHONY: all

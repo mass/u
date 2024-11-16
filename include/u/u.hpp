@@ -14,7 +14,7 @@
 #define LIKELY(x)   (__builtin_expect( !!(x), 1))
 #define UNLIKELY(x) (__builtin_expect( !!(x), 0))
 
-namespace m {
+namespace u {
 
   // Convienence definitions for unsigned char (byte) values
   using byte_view  = std::basic_string_view<uint8_t>;
@@ -62,4 +62,4 @@ namespace m {
 };
 
 // String literal for byte_view
-inline m::byte_view operator"" _bv(const char* d, size_t l) { return m::byte_view((const uint8_t*) d, l); }
+inline u::byte_view operator"" _bv(const char* d, size_t l) { return u::byte_view((const uint8_t*) d, l); }

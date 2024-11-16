@@ -1,6 +1,6 @@
 #pragma once
 
-#include "m.hpp"
+#include "u.hpp"
 
 #include <array>
 #include <fstream>
@@ -10,9 +10,9 @@
 #include <sstream>
 #include <sys/time.h>
 
-#define LOG(s) (m::log(m::log::s))
+#define LOG(s) (u::log(u::log::s))
 
-namespace m {
+namespace u {
 
 //////////////////////////////////////////////////////////////////////////////
 /// Simple message logger using RAII. Not designed for speed / efficiency.

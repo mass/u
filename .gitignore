@@ -1,6 +1,6 @@
 *.o
 *.d
 
-test/m
+test/u
 test/log
 test/stream_buf

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "m.hpp"
+#include "u.hpp"
 
 #include <algorithm>
 #include <cstring>
 #include <utility>
 
-namespace m {
+namespace u {
 
 //////////////////////////////////////////////////////////////////////////////
 /// Contiguous memory buffer with read/write position tracking
