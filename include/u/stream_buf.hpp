@@ -8,7 +8,7 @@
 
 namespace u {
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 /// Contiguous memory buffer with read/write position tracking
 template<typename byte_t = uint8_t>
 class stream_buf
@@ -21,6 +21,7 @@ class stream_buf
     stream_buf(size_t reserve);
     ~stream_buf();
     stream_buf(stream_buf&& o);
+    stream_buf& operator=(stream_buf&& o);
 
     void clear();
     void free();
@@ -44,7 +45,6 @@ class stream_buf
 
     stream_buf(const stream_buf& o) = delete;
     stream_buf& operator=(const stream_buf& o) = delete;
-    stream_buf& operator=(stream_buf&& o) = delete;
 
     byte_t*  _buffer  = nullptr;
     size_t   _size    = 0;
@@ -52,7 +52,7 @@ class stream_buf
     byte_t*  _write   = nullptr;
 };
 
-/// Implementation ///////////////////////////////////////////////////////////
+/// Implementation /////////////////////////////////////////////////////////////
 
 template<typename byte_t>
 inline stream_buf<byte_t>::stream_buf()
@@ -81,6 +81,19 @@ inline stream_buf<byte_t>::stream_buf(stream_buf&& o)
   _size    = std::exchange(o._size,    0);
   _read    = std::exchange(o._read,    nullptr);
   _write   = std::exchange(o._write,   nullptr);
+}
+
+template<typename byte_t>
+inline stream_buf<byte_t>& stream_buf<byte_t>::operator=(stream_buf&& o)
+{
+  if (this == &o)
+    return *this;
+  free();
+  _buffer  = std::exchange(o._buffer,  nullptr);
+  _size    = std::exchange(o._size,    0);
+  _read    = std::exchange(o._read,    nullptr);
+  _write   = std::exchange(o._write,   nullptr);
+  return *this;
 }
 
 template<typename byte_t>
