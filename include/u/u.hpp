@@ -1,8 +1,10 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <random>
 #include <string_view>
 #include <time.h>
 #include <vector>
@@ -57,6 +59,29 @@ namespace u {
       return false;
     p = std::forward<T>(n);
     return true;
+  }
+
+  // Handy wrapper for erase-remove idiom
+  template<typename T, typename F>
+  inline constexpr void eraseRemove(T& m, F&& f) noexcept
+  {
+    m.erase(std::remove_if(m.begin(), m.end(), std::forward<F>(f)), m.end());
+  }
+
+  // Returns a pseudo-random number on the interval [0,N)
+  template<typename T>
+  inline T getRand(T n)
+  {
+    static_assert(std::is_integral_v<T> && not std::is_signed_v<T>);
+
+    static thread_local std::random_device rng{};
+    static thread_local std::mt19937 prng{ rng() };
+
+    if (n == 0)
+      n = 1;
+    std::uniform_int_distribution<T> dist(0, n - 1);
+
+    return dist(prng);
   }
 
 };
